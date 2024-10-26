@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { User } from './users/users.entity';
+import { HelpersModule } from './helpers/helpers.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { User } from './users/users.entity';
       isGlobal: true
     }),
     DatabaseModule,
-    UsersModule
+    UsersModule,
+    HelpersModule
   ],
   // controllers: [AppController, UsersController],
   // providers: [AppService, UsersService],
