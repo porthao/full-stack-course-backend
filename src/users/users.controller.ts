@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { User } from './users.entity';
 
 @Controller('users')
 export class UsersController {
@@ -10,11 +11,8 @@ export class UsersController {
   }
 
   @Post('create')
-  create(@Body() { name, lastname }: { name: string; lastname: string }): {
-    name: string;
-    lastname: string;
-  } {
-    return this.userService.create({ name, lastname });
+  create(@Body() user: User): Promise<User> {
+    return this.userService.create(user);
   }
 
   @Put('update/:id/:fullname')
