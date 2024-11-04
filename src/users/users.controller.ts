@@ -1,6 +1,17 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
+import { AuthGuard } from 'src/helpers/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -15,16 +26,31 @@ export class UsersController {
     return this.userService.create(user);
   }
 
-  @Put('update/:id/:fullname')
-  update(@Param() Param): { id: string } {
-    console.log({ Param });
-    return { id: '234' };
+  @Post('login')
+  login(
+    @Body() { email, password }: { email: string; password: string },
+  ): Promise<{ token: string; refreshToken: string }> {
+    return this.userService.login({ email, password });
   }
 
-  @Get('user')
-  findOne(@Query() { id }: { id: string }): string {
-    return id;
+  @Put('update/profile')
+  @UseGuards(AuthGuard)
+  updateProfile(@Req() request: any, @Body() user: User): Promise<User> {
+    return this.userService.updateUserProfile(user, request);
+  }
+
+  @Get('profile')
+  @UseGuards(AuthGuard)
+  ownerProfile(@Req() request: any): Promise<User> {
+    return this.userService.getOwnerProfile(request);
+  }
+
+  @Put('refresh/token')
+  refreshToken(
+    @Req() request: any,
+  ): Promise<{ token: string; refreshToken: string }> {
+    return this.userService.refreshToken(request);
   }
 }
 
-// http://localhost:4000/api/v1/users/example
+// http://localhost:4000/api/v1/users/update/profile
