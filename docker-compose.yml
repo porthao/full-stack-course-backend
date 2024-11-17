@@ -20,7 +20,8 @@ services:
     image: mysql:latest
     ports:
       - '3306:3306'
-    env_file: 
+    restart: always
+    env_file:
       - .env
     networks:
       - nest-network
