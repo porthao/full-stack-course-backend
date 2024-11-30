@@ -4,7 +4,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy:
@@ -26,7 +26,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.141.143.8 << 'EOF'
           cd full-stack-course-backend
-          git pull origin dev
+          git pull origin main
           docker-compose down
           docker-compose up -d --build
           EOF
