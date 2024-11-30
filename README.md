@@ -38,3 +38,6 @@ docker-compose --version
 - step 5: run docker -> sudo docker-compose up -d --build
 - step 6: check docker run or not -> docker ps
 - step 7: check container work correctly or not -> sudo docker logs <<container-name>> --tail 100 -f
+
+
+<!-- Create github action -->
